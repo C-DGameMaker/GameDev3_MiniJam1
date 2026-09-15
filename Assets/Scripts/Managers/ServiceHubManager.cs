@@ -2,15 +2,27 @@ using UnityEngine;
 
 public class ServiceHubManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+   public static ServiceHubManager Instance { get; private set; }
+
+    [Header("System References")]
+    public GameStateManager gameStateManager;
+
+    private void Awake()
     {
-        
+        #region Singleton Pattern
+
+        // Simple singleton setup for a single-scene game
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+
+        #endregion
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
+
