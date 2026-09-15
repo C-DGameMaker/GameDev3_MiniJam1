@@ -6,6 +6,7 @@ public class ServiceHubManager : MonoBehaviour
 
     [Header("System References")]
     public GameStateManager gameStateManager;
+    public UIManager uiManager;
 
     private void Awake()
     {

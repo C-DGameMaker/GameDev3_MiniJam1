@@ -18,6 +18,8 @@ public class GameStateManager : MonoBehaviour
     public GameStates _currentState { get; private set; }
     public GameStates _previousState { get; private set; }
 
+    public UIManager _manager;
+
     private void Start()
     {
         SetState(newState: GameStates.init);
@@ -46,8 +48,10 @@ public class GameStateManager : MonoBehaviour
                 SetState(newState: GameStates.MainMenu);
                 break;
             case GameStates.MainMenu:
+                _manager.ShowMainMenuUI();
                 break;
             case GameStates.Gameplay:
+                _manager.ShowGamePlayUI();
                 break;
             case GameStates.Paused:
                 break;
@@ -56,5 +60,10 @@ public class GameStateManager : MonoBehaviour
         }
     }
 
-    
+    public void StartGameButton()
+    {
+        SetState(newState: GameStates.Gameplay);
+    }
+
+
 }
