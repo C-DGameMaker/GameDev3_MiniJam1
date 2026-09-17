@@ -181,9 +181,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   momentum: {x: 0, y: 0}
-  walkSpeed: 1
-  jumpForce: 1
-  gripOnGround: 1
+  walkSpeed: 10
+  jumpForce: 10
+  gripOnGround: 100
   gravity: 1
 --- !u!114 &239483586
 MonoBehaviour:

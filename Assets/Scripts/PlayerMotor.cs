@@ -23,20 +23,20 @@ public class PlayerMotor : MonoBehaviour
         if(playerInputs == null) return;
         // sideways force
         momentum.x += (playerInputs.xMovmentVal * walkSpeed) * Time.deltaTime;
-
+        Debug.Log((playerInputs.xMovmentVal * walkSpeed) * Time.deltaTime);
         //jump
         momentum.y += (playerInputs.jumpVal * jumpForce) * Time.deltaTime;
 
         //drag
         if(playerInputs.grounded == true) 
         {
-            momentum.x -= gripOnGround * Time.deltaTime;
+            momentum.x -= ( (momentum.x / gripOnGround) * Time.deltaTime);
             //gravity
             momentum.y = math.clamp(momentum.y, 0, float.MaxValue);
         }
         else
         {
-            momentum.y -= 1;
+            momentum.y -= gravity * Time.deltaTime;
         }
 
         playerInputs.rb.linearVelocity = momentum;

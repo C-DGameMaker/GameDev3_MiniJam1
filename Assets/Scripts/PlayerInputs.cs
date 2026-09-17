@@ -3,6 +3,7 @@ using UnityEditor.Callbacks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.PlayerLoop;
+using UnityEngine.Rendering.Universal;
 
 public class PlayerInputs : MonoBehaviour
 {
@@ -29,6 +30,9 @@ public class PlayerInputs : MonoBehaviour
     public bool grappleHookAttatched;
 
     public Vector2 slopeAnglePlayerUp;
+
+    public float jumpCooldown = 1;
+    private float jumpCooldownTimer = 0;
     //
 
     //ground stuff
@@ -39,6 +43,18 @@ public class PlayerInputs : MonoBehaviour
     public Rigidbody2D rb;
     //
 
+    void UpdateValues()
+    {
+        jumpVal = jumpInput.ReadValue<float>();
+        xMovmentVal = xMovmentInput.ReadValue<Vector2>().x;
+        crouchVal = crouchInput.ReadValue<float>();
+        grappleVal = grappleInput.ReadValue<float>();
+    }
+    void UpdateState()
+    {
+        jumpCooldownTimer -= Time.deltaTime;
+        //if();
+    }
 
     void Awake()
     {
@@ -59,7 +75,7 @@ public class PlayerInputs : MonoBehaviour
     {
         RaycastHit2D hit = Physics2D.CircleCast(
             groundCheck.position,
-            0.2f,
+            0.01f,
             Vector2.down,
             0.01f
         );
@@ -71,7 +87,6 @@ public class PlayerInputs : MonoBehaviour
             
 
             float angle = Vector2.Angle(groundNorm, Vector2.up);
-
             if (angle <= maxSlope)
             {
                 Debug.Log("grounded");
@@ -100,6 +115,8 @@ public class PlayerInputs : MonoBehaviour
     void Update()
     {
         checkGround(80f);
+        UpdateValues();
     }
+
 
 }
