@@ -52,8 +52,12 @@ public class PlayerInputs : MonoBehaviour
     }
     void UpdateState()
     {
+        
         jumpCooldownTimer -= Time.deltaTime;
-        //if();
+        if(jumpCooldown < 0 && grounded)
+        {
+            canJump = true;
+        }
     }
 
     void Awake()
