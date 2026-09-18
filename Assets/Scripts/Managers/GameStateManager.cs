@@ -15,8 +15,8 @@ public class GameStateManager : MonoBehaviour
 {
     [SerializeField] private string _currentActiveState;
     [SerializeField] private string _previousActiveState;
-    public GameStates _currentState { get; private set; }
-    public GameStates _previousState { get; private set; }
+    public GameStates _currentState { get; set; }
+    public GameStates _previousState { get; set; }
 
     public UIManager _manager;
 
@@ -48,22 +48,23 @@ public class GameStateManager : MonoBehaviour
                 SetState(newState: GameStates.MainMenu);
                 break;
             case GameStates.MainMenu:
+                Time.timeScale = 0;
                 _manager.ShowMainMenuUI();
                 break;
             case GameStates.Gameplay:
+                Time.timeScale = 1;
                 _manager.ShowGamePlayUI();
                 break;
             case GameStates.Paused:
+                Time.timeScale = 0;
+                _manager.ShowPausedUI();
                 break;
             case GameStates.Death:
+                Time.timeScale = 0;
                 break;
         }
     }
 
-    public void StartGameButton()
-    {
-        SetState(newState: GameStates.Gameplay);
-    }
 
 
 }

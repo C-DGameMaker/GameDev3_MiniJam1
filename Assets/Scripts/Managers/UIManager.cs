@@ -23,4 +23,11 @@ public class UIManager : MonoBehaviour
         HideAllUI();
         gameplayUI.SetActive(true);
     }
+
+    public void ShowPausedUI() 
+    {
+        HideAllUI();
+        pausedUI.SetActive(true);
+    }
+
 }
