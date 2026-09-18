@@ -21,9 +21,20 @@ public class PlayerMotor : MonoBehaviour
     void FixedUpdate()
     {
         if(playerInputs == null) return;
+
         // sideways force
-        momentum.x += (playerInputs.xMovmentVal * walkSpeed) * Time.deltaTime;
-        Debug.Log((playerInputs.xMovmentVal * walkSpeed) * Time.deltaTime);
+        Vector2 moveDirection;
+
+        if (playerInputs.grounded)
+        {
+            moveDirection = playerInputs.slopeAnglePlayerUp;
+        }
+        else
+        {
+            moveDirection = Vector2.right;
+        }
+        momentum += (moveDirection * playerInputs.xMovmentVal * walkSpeed) * Time.deltaTime;
+
         //jump
         momentum.y += (playerInputs.jumpVal * jumpForce) * Time.deltaTime;
 

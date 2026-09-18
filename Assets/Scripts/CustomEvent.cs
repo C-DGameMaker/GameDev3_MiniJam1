@@ -1,8 +1,8 @@
 using System;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "CustomEvent", menuName = "Custom_Events/Event")]
-public class CustomEvent : ScriptableObject
+
+public class CustomEvent
 {
     public CustomEvent(string name)
     {

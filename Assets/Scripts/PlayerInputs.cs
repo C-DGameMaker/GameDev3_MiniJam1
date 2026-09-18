@@ -52,7 +52,7 @@ public class PlayerInputs : MonoBehaviour
     }
     void UpdateState()
     {
-        
+
         jumpCooldownTimer -= Time.deltaTime;
         if(jumpCooldown < 0 && grounded)
         {
@@ -72,6 +72,14 @@ public class PlayerInputs : MonoBehaviour
     {
         rb = transform.GetComponent<Rigidbody2D>();
         rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+
+        EventBus.RequestEvent("Jumped", true).ping += OnPlayerJump;
+    }
+
+    private void OnPlayerJump()
+    {
+        canJump = false;
+        jumpCooldownTimer = jumpCooldown;
     }
 
 
