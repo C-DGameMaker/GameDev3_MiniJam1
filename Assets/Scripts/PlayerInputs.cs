@@ -24,6 +24,7 @@ public class PlayerInputs : MonoBehaviour
     //
 
     //state values
+     
     public bool grounded; //theres a cooldown on jumping, so these are different!
     public bool canJump;
     public bool grappleHookOut;
@@ -89,7 +90,7 @@ public class PlayerInputs : MonoBehaviour
             groundCheck.position,
             0.01f,
             Vector2.down,
-            0.01f
+            0.5f
         );
 
         if (hit.collider != null)
@@ -124,7 +125,7 @@ public class PlayerInputs : MonoBehaviour
 
     } 
 
-    void Update()
+    void FixedUpdate()
     {
         checkGround(80f);
         UpdateValues();

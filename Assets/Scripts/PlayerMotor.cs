@@ -20,36 +20,6 @@ public class PlayerMotor : MonoBehaviour
     }
     void FixedUpdate()
     {
-        if(playerInputs == null) return;
-
-        // sideways force
-        Vector2 moveDirection;
-
-        if (playerInputs.grounded)
-        {
-            moveDirection = playerInputs.slopeAnglePlayerUp;
-        }
-        else
-        {
-            moveDirection = Vector2.right;
-        }
-        momentum += (moveDirection * playerInputs.xMovmentVal * walkSpeed) * Time.deltaTime;
-
-        //jump
-        momentum.y += (playerInputs.jumpVal * jumpForce) * Time.deltaTime;
-
-        //drag
-        if(playerInputs.grounded == true) 
-        {
-            momentum.x -= ( (momentum.x / gripOnGround) * Time.deltaTime);
-            //gravity
-            momentum.y = math.clamp(momentum.y, 0, float.MaxValue);
-        }
-        else
-        {
-            momentum.y -= gravity * Time.deltaTime;
-        }
-
-        playerInputs.rb.linearVelocity = momentum;
+        
     }
 }
