@@ -56,4 +56,10 @@ public class ButtonManager : MonoBehaviour
             serviceHub.gameStateManager._previousState = GameStates.Gameplay;
         }
     }
+
+    public void BackToMenuButton()
+    {
+        serviceHub.gameStateManager.SetState
+            (newState: GameStates.MainMenu);
+    }
 }

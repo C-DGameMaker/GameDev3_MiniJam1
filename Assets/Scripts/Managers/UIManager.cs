@@ -5,11 +5,13 @@ public class UIManager : MonoBehaviour
     public GameObject mainMenuUI;
     public GameObject gameplayUI;
     public GameObject pausedUI;
+    public GameObject deathUI;
     private void HideAllUI()
     {
         mainMenuUI.SetActive(false);
         gameplayUI.SetActive(false);
         pausedUI.SetActive(false);
+        deathUI.SetActive(false);
     }
 
     public void ShowMainMenuUI()
@@ -28,6 +30,12 @@ public class UIManager : MonoBehaviour
     {
         HideAllUI();
         pausedUI.SetActive(true);
+    }
+
+    public void ShowDeathUI()
+    {
+        HideAllUI();
+        deathUI.SetActive(true);
     }
 
 }

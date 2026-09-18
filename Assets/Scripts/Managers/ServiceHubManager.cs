@@ -20,6 +20,7 @@ public class ServiceHubManager : MonoBehaviour
         else
         {
             Instance = this;
+            DontDestroyOnLoad(this);
         }
 
         #endregion

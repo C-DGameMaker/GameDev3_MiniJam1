@@ -18,7 +18,7 @@ public class GameStateManager : MonoBehaviour
     public GameStates _currentState { get; set; }
     public GameStates _previousState { get; set; }
 
-    public UIManager _manager;
+    public ServiceHubManager _manager;
 
     private void Start()
     {
@@ -49,17 +49,18 @@ public class GameStateManager : MonoBehaviour
                 break;
             case GameStates.MainMenu:
                 Time.timeScale = 0;
-                _manager.ShowMainMenuUI();
+                _manager.uiManager.ShowMainMenuUI();
                 break;
             case GameStates.Gameplay:
                 Time.timeScale = 1;
-                _manager.ShowGamePlayUI();
+                _manager.uiManager.ShowGamePlayUI();
                 break;
             case GameStates.Paused:
                 Time.timeScale = 0;
-                _manager.ShowPausedUI();
+                _manager.uiManager.ShowPausedUI();
                 break;
             case GameStates.Death:
+                _manager.uiManager.ShowDeathUI();
                 Time.timeScale = 0;
                 break;
         }
