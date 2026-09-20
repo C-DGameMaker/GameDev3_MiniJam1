@@ -12,8 +12,8 @@ public class CustomEvent
     public string EventName {get ; private set;}
     public event Action ping;
 
-    void Awake()
+    public void Invoke()
     {
-        EventBus.events.Add(this); //adds itself to the event bus
+        ping?.Invoke();
     }
 }

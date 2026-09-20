@@ -25,6 +25,7 @@ public static class EventBus
         if(createIfNone)
         {
             CustomEvent newEvent = new CustomEvent(eventName);
+            events.Add(newEvent);
             return newEvent;
         }
         return null;

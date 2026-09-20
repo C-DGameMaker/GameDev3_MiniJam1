@@ -16,6 +16,7 @@ public class PlayerInputs : MonoBehaviour
     private InputAction grappleInput;
     //
 
+
     //these are what the motor script reads
     public float jumpVal; 
     public float xMovmentVal;
@@ -23,14 +24,16 @@ public class PlayerInputs : MonoBehaviour
     public float grappleVal;
     //
 
+
     //state values
-     
     public bool grounded; //theres a cooldown on jumping, so these are different!
     public bool canJump;
     public bool grappleHookOut;
     public bool grappleHookAttatched;
 
     public Vector2 slopeAnglePlayerUp;
+    public float groundHitHeight;
+
 
     public float jumpCooldown = 1;
     private float jumpCooldownTimer = 0;
@@ -50,12 +53,9 @@ public class PlayerInputs : MonoBehaviour
         xMovmentVal = xMovmentInput.ReadValue<Vector2>().x;
         crouchVal = crouchInput.ReadValue<float>();
         grappleVal = grappleInput.ReadValue<float>();
-    }
-    void UpdateState()
-    {
 
-        jumpCooldownTimer -= Time.deltaTime;
-        if(jumpCooldown < 0 && grounded)
+        jumpCooldownTimer -= Time.fixedDeltaTime;
+        if(jumpCooldownTimer < 0 && grounded)
         {
             canJump = true;
         }
@@ -86,11 +86,12 @@ public class PlayerInputs : MonoBehaviour
 
     public void checkGround(float maxSlope)
     {
-        RaycastHit2D hit = Physics2D.CircleCast(
+        RaycastHit2D hit = Physics2D.BoxCast(
             groundCheck.position,
-            0.01f,
+            new Vector2(1, 0.1f),
+            0,
             Vector2.down,
-            0.5f
+            1f
         );
 
         if (hit.collider != null)
@@ -107,19 +108,22 @@ public class PlayerInputs : MonoBehaviour
                     -groundNorm.y,
                     groundNorm.x
                 );
+                groundHitHeight = hit.point.y;
                 grounded = true;
             }
             else
             {
                 Debug.Log("not grounded");
-                slopeAnglePlayerUp = Vector2.up;
+                slopeAnglePlayerUp = -Vector2.right;
+                groundHitHeight = float.MinValue;
                 grounded = false;
             }
         }
         else
         {
             Debug.Log("not grounded");
-            slopeAnglePlayerUp = Vector2.up;
+            slopeAnglePlayerUp = -Vector2.right;
+            groundHitHeight = float.MinValue;
             grounded = false;
         }
 
