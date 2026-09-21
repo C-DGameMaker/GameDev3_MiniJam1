@@ -2517,7 +2517,7 @@ MonoBehaviour:
   mainMenuUI: {fileID: 1985769091}
   gameplayUI: {fileID: 720761815}
   pausedUI: {fileID: 174383841}
-  deathUI: {fileID: 0}
+  deathUI: {fileID: 988352770}
 --- !u!1 &1072382280
 GameObject:
   m_ObjectHideFlags: 0
