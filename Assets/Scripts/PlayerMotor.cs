@@ -14,6 +14,7 @@ public class PlayerMotor : MonoBehaviour
     public float jumpForce = 1;
     public float gripOnGround = 1;
     public float gravity = 1;
+    public float airMobility = 1;
     //
     void Start()
     {
@@ -24,13 +25,14 @@ public class PlayerMotor : MonoBehaviour
         //place the position to where the player should be going 
 
         Vector2 playerTranslatePos = playerInputs.rb.position;
-        
-        
-        
-        
-        
 
-        if(playerInputs.grounded == false) momentum.y -= gravity * Time.fixedDeltaTime;//gravity
+        if(playerInputs.grounded == false)
+        {
+            momentum.y -= gravity * Time.fixedDeltaTime;//gravity 
+
+            Vector2 check = (( playerInputs.xMovmentVal * airMobility ) * -playerInputs.slopeAnglePlayerUp) * Time.fixedDeltaTime;
+            if(math.abs(check.x + momentum.x) < math.abs(momentum.x)) momentum += check * airMobility; 
+        } 
         else 
         {
             //correcting partial tunneling
@@ -38,18 +40,15 @@ public class PlayerMotor : MonoBehaviour
             Debug.Log(playerInputs.groundHitHeight);
             playerTranslatePos.y = supposedToBeHeight;
             //
+    
             momentum.y = Math.Clamp(momentum.y, 0, float.MaxValue);
+            momentum += (playerInputs.xMovmentVal * -playerInputs.slopeAnglePlayerUp) * Time.fixedDeltaTime;
         }
         if(playerInputs.canJump == true && playerInputs.jumpVal > 0.1) 
         {
             momentum.y += playerInputs.jumpVal * jumpForce * Time.fixedDeltaTime; //jumping
             EventBus.RequestEvent("Jumped", true).Invoke();
         }
-
-
-        Debug.Log(playerInputs.xMovmentVal + " x " + playerInputs.slopeAnglePlayerUp);
-        momentum += (playerInputs.xMovmentVal * -playerInputs.slopeAnglePlayerUp) * Time.fixedDeltaTime;
-
         
         if(playerInputs.grounded == true) 
         {
@@ -58,12 +57,11 @@ public class PlayerMotor : MonoBehaviour
 
         //translate them towards it :thumbs_up:
 
-
+        //
         
         playerTranslatePos += momentum;
         
         
         playerInputs.rb.MovePosition(playerTranslatePos);
-        //victory
     }
 }
