@@ -2,11 +2,12 @@ using UnityEngine;
 
 public class ServiceHubManager : MonoBehaviour
 {
-   public static ServiceHubManager Instance { get; private set; }
+    public static ServiceHubManager Instance { get; private set; }
 
     [Header("System References")]
     public GameStateManager gameStateManager;
     public UIManager uiManager;
+    public GameObject player;
 
     private void Awake()
     {

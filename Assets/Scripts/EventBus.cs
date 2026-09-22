@@ -31,3 +31,8 @@ public static class EventBus
         return null;
     }
 }
+
+//SIGNING UP TO EVENTS -> EventBus.RequestEvent("Jumped", true).ping += FunctionName;
+//FIRING OFF EVENTS -> EventBus.RequestEvent("Jumped", true).Invoke();
+
+//the name is whats important in linking events, there can only be one event with each name (ie. one "jumped"), so pinging "jumped" will fire to everything subscribed to "jump"

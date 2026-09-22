@@ -795,7 +795,39 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &965693160
+--- !u!1 &1019306068
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1019306069}
+  - component: {fileID: 1019306070}
+  m_Layer: 0
+  m_Name: LevelBuilder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1019306069
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1019306068}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 4.55159, y: 6.53588, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 484554606090937758}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1019306070
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -811,6 +843,7 @@ MonoBehaviour:
   deathWall: {fileID: 849140119}
   followSpeed: 0.005
   playerPosOnScreem: 0.8
+
 --- !u!1 &1039938215
 GameObject:
   m_ObjectHideFlags: 0
@@ -1218,6 +1251,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -9.785, y: 12.3784, z: 0}
   m_LocalScale: {x: 6.661899, y: 4.358459, z: 1}
+
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1706697210}
@@ -1622,7 +1656,7 @@ Transform:
   m_GameObject: {fileID: 1936892657}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.6021, y: 6.3457, z: 0}
+  m_LocalPosition: {x: 13.55, y: 6.4, z: 0}
   m_LocalScale: {x: 11.661093, y: 5.083828, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2004,6 +2038,7 @@ Transform:
   - {fileID: 7292885220085804204}
   - {fileID: 3368157617383608744}
   - {fileID: 6148799237204240815}
+  - {fileID: 1019306069}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &490294345417662311
@@ -4460,6 +4495,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ServiceHubManager
   gameStateManager: {fileID: 3605869280427500563}
   uiManager: {fileID: 8334684096044144059}
+  player: {fileID: 239483581}
 --- !u!224 &6685755026483895179
 RectTransform:
   m_ObjectHideFlags: 0
