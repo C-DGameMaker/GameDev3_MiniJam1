@@ -23,7 +23,7 @@ public class GameStateManager : MonoBehaviour
 
     public ServiceHubManager _manager;
 
-    private void Awake()
+    private void Start()
     {
         SetState(newState: GameStates.init);
     }
