@@ -55,6 +55,7 @@ public class ButtonManager : MonoBehaviour
 
     public void BackToMenuButton()
     {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         serviceHub.gameStateManager.SetState
             (newState: GameStates.init);
     }

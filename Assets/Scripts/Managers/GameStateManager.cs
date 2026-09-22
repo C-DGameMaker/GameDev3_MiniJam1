@@ -48,7 +48,6 @@ public class GameStateManager : MonoBehaviour
                 break;
 
             case GameStates.init:
-                //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 SetState(newState: GameStates.MainMenu);
                 break;
             case GameStates.MainMenu:
