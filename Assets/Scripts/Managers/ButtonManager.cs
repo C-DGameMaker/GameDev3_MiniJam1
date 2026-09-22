@@ -1,5 +1,6 @@
 using UnityEditor.Search;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ButtonManager : MonoBehaviour
 {
@@ -60,7 +61,7 @@ public class ButtonManager : MonoBehaviour
     public void BackToMenuButton()
     {
         serviceHub.gameStateManager.SetState
-            (newState: GameStates.MainMenu);
+            (newState: GameStates.init);
     }
 
     public void DeathButton()
