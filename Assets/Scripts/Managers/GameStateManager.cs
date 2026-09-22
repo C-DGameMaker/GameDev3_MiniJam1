@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public enum GameStates
 {
@@ -13,6 +15,7 @@ public enum GameStates
 
 public class GameStateManager : MonoBehaviour
 {
+    [SerializeField] EventSystem eventSystem; 
     [SerializeField] private string _currentActiveState;
     [SerializeField] private string _previousActiveState;
     public GameStates _currentState { get; set; }
@@ -20,7 +23,7 @@ public class GameStateManager : MonoBehaviour
 
     public ServiceHubManager _manager;
 
-    private void Start()
+    private void Awake()
     {
         SetState(newState: GameStates.init);
     }
@@ -45,6 +48,7 @@ public class GameStateManager : MonoBehaviour
                 break;
 
             case GameStates.init:
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 SetState(newState: GameStates.MainMenu);
                 break;
             case GameStates.MainMenu:
