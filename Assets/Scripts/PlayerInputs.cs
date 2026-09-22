@@ -142,7 +142,6 @@ public class PlayerInputs : MonoBehaviour
             {
                 wallHitx = hit.point.x;
                 onWall = true;
-                Debug.Log("wawl");
                 break;
             }
         }
@@ -155,8 +154,8 @@ public class PlayerInputs : MonoBehaviour
 
     void FixedUpdate()
     {
-        checkGround(60f);
         checkWall();
+        checkGround(60f);
         UpdateValues();
     }
 

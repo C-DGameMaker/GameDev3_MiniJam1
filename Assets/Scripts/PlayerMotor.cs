@@ -2,12 +2,15 @@ using System;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering.Universal;
 
 public class PlayerMotor : MonoBehaviour
 {
     private PlayerInputs playerInputs;
 
     public Vector2 momentum;
+
+    private float slopeBoost;
 
     //adjustables
     public float walkSpeed = 1;
@@ -39,14 +42,19 @@ public class PlayerMotor : MonoBehaviour
             float supposedToBeHeight = playerInputs.groundHitHeight + playerInputs.transform.localScale.y/2;
             playerTranslatePos.y = supposedToBeHeight;
             //
-    
-            momentum.y = Math.Clamp(momentum.y, 0, float.MaxValue);
-            momentum += (playerInputs.xMovmentVal * -playerInputs.slopeAnglePlayerUp) * Time.fixedDeltaTime;
+
+            if (math.abs(playerInputs.slopeAnglePlayerUp.x) < 0.99f)
+            {
+                float boost = math.abs(momentum.y - Math.Clamp(momentum.y, 0, float.MaxValue));
+                momentum.y = Math.Clamp(momentum.y, 0, float.MaxValue);
+                momentum.x += (boost * playerInputs.slopeAnglePlayerUp.y);
+            }
+            momentum += (playerInputs.xMovmentVal * -playerInputs.slopeAnglePlayerUp)  * Time.fixedDeltaTime;
         }
         if(playerInputs.canJump == true && playerInputs.jumpVal > 0.1) 
         {
-            Debug.Log(playerInputs.movmentDirection);
             momentum.y += playerInputs.jumpVal * jumpForce * Time.fixedDeltaTime; //jumping
+            
             if(playerInputs.onWall) momentum.x += (playerInputs.jumpVal * jumpForce*0.5f) * -playerInputs.movmentDirection * Time.fixedDeltaTime;
             EventBus.RequestEvent("Jumped", true).Invoke();
         }
@@ -54,16 +62,21 @@ public class PlayerMotor : MonoBehaviour
         //wall physics
         if(playerInputs.onWall)
         {
+            float boost = 0;
             if(playerInputs.movmentDirection == 1 )
             {
                 playerTranslatePos.x = math.clamp(playerTranslatePos.x, playerInputs.wallHitx - playerInputs.transform.localScale.x/2, float.MinValue);
-                momentum.x = math.clamp(momentum.x, 0, float.MinValue);
+                boost = math.abs(momentum.x - math.clamp(momentum.x, float.MinValue, 0));
+                momentum.x = math.clamp(momentum.x, float.MinValue, 0);
+
             }
             else 
             {
                 playerTranslatePos.x = math.clamp(playerTranslatePos.x, playerInputs.wallHitx + playerInputs.transform.localScale.x/2 , float.MaxValue);
+                boost = math.abs(momentum.x - math.clamp(momentum.x, 0, float.MaxValue));
                 momentum.x = math.clamp(momentum.x, 0, float.MaxValue);
             }
+            if (momentum.y > 0.01f && momentum.y < 0.1) momentum.y += boost;
         }
         //
         
@@ -71,16 +84,18 @@ public class PlayerMotor : MonoBehaviour
         {
             momentum /= gripOnGround;
         }
+        
 
         //translate them towards it :thumbs_up:
 
         //
         
         playerTranslatePos += momentum;
-        
+        Debug.Log(momentum);
         playerInputs.rb.MovePosition(playerTranslatePos);
 
-        if(momentum.x > 0.01f) playerInputs.movmentDirection = 1;
-        else if(momentum.x > -0.01f) playerInputs.movmentDirection = -1;
+        if(momentum.x > 0.0001f) playerInputs.movmentDirection = 1;
+        else if(momentum.x < -0.0001f) playerInputs.movmentDirection = -1;
+
     }
 }
