@@ -37,7 +37,6 @@ public class PlayerMotor : MonoBehaviour
         {
             //correcting partial tunneling
             float supposedToBeHeight = playerInputs.groundHitHeight + playerInputs.transform.localScale.y/2;
-            Debug.Log(playerInputs.groundHitHeight);
             playerTranslatePos.y = supposedToBeHeight;
             //
     
@@ -46,9 +45,27 @@ public class PlayerMotor : MonoBehaviour
         }
         if(playerInputs.canJump == true && playerInputs.jumpVal > 0.1) 
         {
+            Debug.Log(playerInputs.movmentDirection);
             momentum.y += playerInputs.jumpVal * jumpForce * Time.fixedDeltaTime; //jumping
+            if(playerInputs.onWall) momentum.x += (playerInputs.jumpVal * jumpForce*0.5f) * -playerInputs.movmentDirection * Time.fixedDeltaTime;
             EventBus.RequestEvent("Jumped", true).Invoke();
         }
+
+        //wall physics
+        if(playerInputs.onWall)
+        {
+            if(playerInputs.movmentDirection == 1 )
+            {
+                playerTranslatePos.x = math.clamp(playerTranslatePos.x, playerInputs.wallHitx - playerInputs.transform.localScale.x/2, float.MinValue);
+                momentum.x = math.clamp(momentum.x, 0, float.MinValue);
+            }
+            else 
+            {
+                playerTranslatePos.x = math.clamp(playerTranslatePos.x, playerInputs.wallHitx + playerInputs.transform.localScale.x/2 , float.MaxValue);
+                momentum.x = math.clamp(momentum.x, 0, float.MaxValue);
+            }
+        }
+        //
         
         if(playerInputs.grounded == true) 
         {
@@ -61,7 +78,9 @@ public class PlayerMotor : MonoBehaviour
         
         playerTranslatePos += momentum;
         
-        
         playerInputs.rb.MovePosition(playerTranslatePos);
+
+        if(momentum.x > 0.01f) playerInputs.movmentDirection = 1;
+        else if(momentum.x > -0.01f) playerInputs.movmentDirection = -1;
     }
 }

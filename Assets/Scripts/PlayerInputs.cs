@@ -1,6 +1,7 @@
 using Unity.VisualScripting;
 using UnityEditor.Callbacks;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.PlayerLoop;
 using UnityEngine.Rendering.Universal;
@@ -26,15 +27,16 @@ public class PlayerInputs : MonoBehaviour
 
 
     //state values
-    public bool grounded; //theres a cooldown on jumping, so these are different!
+    public bool grounded; 
+    public bool onWall;
     public bool canJump;
     public bool grappleHookOut;
     public bool grappleHookAttatched;
 
     public Vector2 slopeAnglePlayerUp;
     public float groundHitHeight;
-
-
+    public float wallHitx;
+    public float movmentDirection;
     public float jumpCooldown = 1;
     private float jumpCooldownTimer = 0;
     //
@@ -55,7 +57,7 @@ public class PlayerInputs : MonoBehaviour
         grappleVal = grappleInput.ReadValue<float>();
 
         jumpCooldownTimer -= Time.fixedDeltaTime;
-        if(jumpCooldownTimer < 0 && grounded)
+        if(jumpCooldownTimer < 0 && (grounded || onWall))
         {
             canJump = true;
         }
@@ -86,52 +88,75 @@ public class PlayerInputs : MonoBehaviour
 
     public void checkGround(float maxSlope)
     {
-        RaycastHit2D hit = Physics2D.BoxCast(
+        RaycastHit2D[] hits = Physics2D.BoxCastAll(
             groundCheck.position,
-            new Vector2(1, 0.1f),
+            new Vector2(0.5f, 0.1f),
             0,
             Vector2.down,
-            1f
+            0.5f
         );
 
-        if (hit.collider != null)
+        grounded = false;
+
+        foreach (RaycastHit2D hit in hits)
         {
+            float angle = Vector2.Angle(hit.normal, Vector2.up);
 
-            Vector2 groundNorm = hit.normal;
-            
-
-            float angle = Vector2.Angle(groundNorm, Vector2.up);
             if (angle <= maxSlope)
             {
-                Debug.Log("grounded");
                 slopeAnglePlayerUp = new Vector2(
-                    -groundNorm.y,
-                    groundNorm.x
+                    -hit.normal.y,
+                    hit.normal.x
                 );
+
                 groundHitHeight = hit.point.y;
                 grounded = true;
+
+                break;
             }
-            else
-            {
-                Debug.Log("not grounded");
-                slopeAnglePlayerUp = -Vector2.right;
-                groundHitHeight = float.MinValue;
-                grounded = false;
-            }
-        }
-        else
-        {
-            Debug.Log("not grounded");
-            slopeAnglePlayerUp = -Vector2.right;
-            groundHitHeight = float.MinValue;
-            grounded = false;
         }
 
-    } 
+        if (!grounded)
+        {
+            slopeAnglePlayerUp = -Vector2.right;
+            groundHitHeight = float.MinValue;
+        }
+    }
+    public void checkWall()
+    {
+        RaycastHit2D[] hits = Physics2D.BoxCastAll(
+            groundCheck.position,
+            new Vector2(0.1f, 0.5f),
+            0,
+            Vector2.right * movmentDirection,
+            0.5f
+        );
+        
+        onWall = false;
+
+        foreach (RaycastHit2D hit in hits)
+        {
+            float angle = Vector2.Angle(hit.normal, Vector2.up);
+
+            if (Mathf.Abs(angle - 90f) < 0.1f)
+            {
+                wallHitx = hit.point.x;
+                onWall = true;
+                Debug.Log("wawl");
+                break;
+            }
+        }
+
+        if (!onWall)
+        {
+            wallHitx = -float.MaxValue;
+        }
+    }
 
     void FixedUpdate()
     {
-        checkGround(80f);
+        checkGround(60f);
+        checkWall();
         UpdateValues();
     }
 
