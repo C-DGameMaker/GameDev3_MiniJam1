@@ -91,7 +91,6 @@ public class PlayerMotor : MonoBehaviour
         //
         
         playerTranslatePos += momentum;
-        Debug.Log(momentum);
         playerInputs.rb.MovePosition(playerTranslatePos);
 
         if(momentum.x > 0.0001f) playerInputs.movmentDirection = 1;
