@@ -21,11 +21,6 @@ public class ButtonManager : MonoBehaviour
         serviceHub.gameStateManager.SetState(newState: GameStates.Gameplay);
     }
 
-    public void InstructionButton()
-    {
-
-    }
-
     public void QuitButton()
     {
         Application.Quit();
