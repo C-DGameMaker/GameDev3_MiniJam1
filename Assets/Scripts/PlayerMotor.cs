@@ -53,9 +53,9 @@ public class PlayerMotor : MonoBehaviour
         }
         if(playerInputs.canJump == true && playerInputs.jumpVal > 0.1) 
         {
-            momentum.y += playerInputs.jumpVal * jumpForce * Time.fixedDeltaTime; //jumping
-            
-            if(playerInputs.onWall) momentum.x += (playerInputs.jumpVal * jumpForce*0.5f) * -playerInputs.movmentDirection * Time.fixedDeltaTime;
+            momentum.y += playerInputs.jumpVal * jumpForce; //jumping
+            momentum.y = math.clamp(momentum.y, float.MinValue, 0.4f);
+            if(playerInputs.onWall) momentum.x += (playerInputs.jumpVal * jumpForce* 0.3f) * -playerInputs.movmentDirection;
             EventBus.RequestEvent("Jumped", true).Invoke();
         }
 
