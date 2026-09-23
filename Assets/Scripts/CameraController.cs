@@ -26,7 +26,6 @@ public class CameraController : MonoBehaviour
         {
             proposedPos.x = Vector2.Lerp(transformPos, deathPosition, followSpeed).x;
         }
-        Debug.Log(proposedPos);
         transform.position = new Vector3(proposedPos.x, proposedPos.y, -10);
     }
 }

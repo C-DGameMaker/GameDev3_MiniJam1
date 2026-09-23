@@ -58,7 +58,6 @@ public class LevelBuilder : MonoBehaviour
     private void CreateMapPool()
     {
         piecePool = new levelDat[mapPiecePrefabs.Length * numOfEachPieceInPool];
-
         int c = 0;
         foreach (var item in mapPiecePrefabs)
         {
@@ -88,19 +87,22 @@ public class LevelBuilder : MonoBehaviour
         levelDat lastObj;
         if(poolIndexEnd >= piecePool.Length)
         {
-            poolIndexEnd = -1;
+            Debug.Log("looping index...");
+            poolIndexEnd = 1;
         }
-        if (starting)
+
+        if (starting)//determening weather to use the starting piece as the piece to place after, or a previous normal piece
         {
-            lastObj = piecePool[poolIndexEnd + 1];
+            lastObj = startPiece;
+            starting = false;
         }
         else
         {
-            lastObj = piecePool[poolIndexEnd + 1];
+            lastObj = piecePool[poolIndexEnd - 1];
         }
-        obj.obj.transform.position = lastObj.endPiece.position + obj.startPiece.localPosition;
-        obj.avalabilty = false;
+        obj.obj.transform.position = lastObj.endPiece.position - obj.startPiece.localPosition;
 
+        obj.avalabilty = false;
         poolIndexEnd += 1;
     }
     private void RePoolPiece()
@@ -121,8 +123,8 @@ public class LevelBuilder : MonoBehaviour
         startPiece = new levelDat(obj, obj.transform.Find("Start"), obj.transform.Find("End"));
         startPiece.avalabilty = false;
 
-        startPiecePrefab.transform.parent = mapParent.transform;
-        startPiecePrefab.transform.position = Vector3.zero;
+        obj.transform.parent = mapParent.transform;
+        obj.transform.position = Vector3.zero;
         starting = true;
         CreateMapPool();
 
