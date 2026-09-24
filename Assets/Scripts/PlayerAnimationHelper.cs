@@ -5,7 +5,7 @@ public class PlayerAnimationHelper : MonoBehaviour
 
 
     [SerializeField] Animator playerAnimator;
-    [SerializeField] GameObject player;
+    private GameObject player;
     private PlayerInputs inputs;
     private PlayerMotor motor;
 
@@ -22,13 +22,14 @@ public class PlayerAnimationHelper : MonoBehaviour
 
     void Start()
     {
+        player = this.gameObject;
         if(player == null)
         {
             Debug.LogError("No player given to the animation helper!");
             return;
         }
-
         inputs = player.GetComponent<PlayerInputs>();
+        motor = player.GetComponent<PlayerMotor>();
     }
 
     void UpdateValues()
