@@ -800,7 +800,7 @@ MonoBehaviour:
   startPiecePrefab: {fileID: 5411599697063366586, guid: 582b1aaec47219541b97f3cdffd60bca, type: 3}
   mapParent: {fileID: 1039938215}
   shuffleCount: 4
-  numOfEachPieceInPool: 1
+  numOfEachPieceInPool: 4
 --- !u!222 &46220884187246848
 CanvasRenderer:
   m_ObjectHideFlags: 0
