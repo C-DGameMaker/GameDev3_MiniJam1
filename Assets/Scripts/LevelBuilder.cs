@@ -1,7 +1,7 @@
-using NUnit.Framework;
-using System.Collections.Generic;
+
+using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.WSA;
+
 
 public class levelDat
 {
@@ -21,7 +21,7 @@ public class levelDat
 public class LevelBuilder : MonoBehaviour
 {
 
-    private GameObject player = ServiceHubManager.Instance.player;
+    private GameObject player;
 
     //refs
     [SerializeField] GameObject[] mapPiecePrefabs;
@@ -37,14 +37,15 @@ public class LevelBuilder : MonoBehaviour
     //
     private levelDat startPiece;
     private levelDat[] piecePool;
-    private int poolIndexStart = 1;
-    private int poolIndexEnd = 2;
+    private int poolIndexStart = 0;
+    private int poolIndexEnd = 1;
     //
     private void Start()
     {
         EventBus.RequestEvent("ReturnMainMenu", true).ping += ReloadMap;
         EventBus.RequestEvent("PiecePassedByWall", true).ping += RePoolPiece;
         InitializeStart();
+        player = ServiceHubManager.Instance.player;
     }
     private void ReloadMap()
     {
@@ -70,25 +71,35 @@ public class LevelBuilder : MonoBehaviour
             }
             c += 1;
         }
+
+        int num1;
+        int num2;
+
         for (int i = 0; i < shuffleCount; i++)
         {
-            int num1 = Random.Range(0, piecePool.Length);
-            int num2 = Random.Range(0, piecePool.Length);
+            num1 = UnityEngine.Random.Range(0, piecePool.Length - 1);
+            num2 = UnityEngine.Random.Range(0, piecePool.Length - 1);
 
             levelDat temp = piecePool[num1];
             piecePool[num1] = piecePool[num2];
             piecePool[num2] = temp;
         }
+        Debug.Log("Done mixing!");
     }
     private bool starting;
     private void PlacePiece()
     {
+        int temp = poolIndexEnd;
+        poolIndexEnd += 1;
+        Debug.Log(poolIndexEnd);
+
         levelDat obj = piecePool[poolIndexEnd];
         levelDat lastObj;
-        if(poolIndexEnd >= piecePool.Length)
+
+        if(poolIndexEnd >= piecePool.Length - 1)
         {
             Debug.Log("looping index...");
-            poolIndexEnd = 1;
+            poolIndexEnd = -1;
         }
 
         if (starting)//determening weather to use the starting piece as the piece to place after, or a previous normal piece
@@ -98,17 +109,16 @@ public class LevelBuilder : MonoBehaviour
         }
         else
         {
-            lastObj = piecePool[poolIndexEnd - 1];
+            lastObj = piecePool[temp];
         }
         obj.obj.transform.position = lastObj.endPiece.position - obj.startPiece.localPosition;
 
         obj.avalabilty = false;
-        poolIndexEnd += 1;
     }
     private void RePoolPiece()
     {
         levelDat obj = piecePool[poolIndexStart];
-        if (poolIndexStart >= piecePool.Length)
+        if (poolIndexStart >= piecePool.Length - 1)
         {
             poolIndexStart = -1;
         }
@@ -128,9 +138,18 @@ public class LevelBuilder : MonoBehaviour
         starting = true;
         CreateMapPool();
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 1; i++)
         {
             PlacePiece();
+        }
+    }
+
+    void Update()
+    {
+        if(math.abs(player.transform.position.x - piecePool[poolIndexEnd - 1].obj.transform.position.x) < 100) 
+        {
+            PlacePiece();
+            Debug.Log("Adding piece");
         }
     }
 }
