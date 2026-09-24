@@ -2,15 +2,24 @@ using UnityEngine;
 
 public class PlayerAnimationHelper : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+
+
+    [SerializeField] Animator playerAnimator;
+    int isMovingHash = Animator.StringToHash("isMoving");
+    void AnimationMovement()
     {
-        
+        //if(true)
+        //{
+        //    playerAnimator.SetBool(isMovingHash, true);
+        //}
+        //else
+        //{
+        //    playerAnimator.SetBool(isMovingHash, false);
+        //}
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        AnimationMovement();
     }
 }
