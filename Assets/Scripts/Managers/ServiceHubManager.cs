@@ -1,5 +1,9 @@
 using UnityEngine;
-
+/// <summary>
+/// Charlie Dobson
+/// 
+/// Manages the service of the game
+/// </summary>
 public class ServiceHubManager : MonoBehaviour
 {
    public static ServiceHubManager Instance { get; private set; }

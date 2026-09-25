@@ -1,5 +1,9 @@
 using UnityEngine;
-
+/// <summary>
+/// Charlie Dobson
+/// 
+/// Manages all the UI
+/// </summary>
 public class UIManager : MonoBehaviour
 {
     public GameObject mainMenuUI;
