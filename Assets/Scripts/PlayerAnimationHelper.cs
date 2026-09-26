@@ -6,7 +6,7 @@ public class PlayerAnimationHelper : MonoBehaviour
 
     [SerializeField] Animator playerAnimator;
     private GameObject player;
-    private PlayerInputs inputs;
+    [SerializeField] PlayerInputs inputs;
     [SerializeField] PlayerMotor motor;
 
     int isMovingHash = Animator.StringToHash("isMoving");
@@ -36,18 +36,24 @@ public class PlayerAnimationHelper : MonoBehaviour
     void UpdateValues()
     {
         movmentSpeed = motor.momentum.x;
-        Debug.Log("Speed: " + movmentSpeed);
-        Debug.Log(motor.momentum.x);
 
-        if (movmentSpeed <= 0.001f) isMoving = false;
-        else isMoving = true;
+        if (movmentSpeed < 0.001f)
+        {
+            isMoving = false;
+        }
+        else
+        {
+            isMoving = true;
+        }
+
+        
 
         movmentDirection = inputs.movmentDirection;
         isGrounded = inputs.grounded;
     }
     void AnimationMovement()
     {
-        if (isMoving == true && isGrounded == true)
+        if (isMoving == true)
         {
             playerAnimator.SetBool(isMovingHash, true);
         }
