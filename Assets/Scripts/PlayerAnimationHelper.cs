@@ -37,7 +37,7 @@ public class PlayerAnimationHelper : MonoBehaviour
     {
         movmentSpeed = motor.momentum.x;
 
-        if (movmentSpeed < 0.001f)
+        if (movmentSpeed < 0.001f && movmentSpeed > -0.001f)
         {
             isMoving = false;
         }
