@@ -61,6 +61,15 @@ public class PlayerAnimationHelper : MonoBehaviour
         {
             playerAnimator.SetBool(isMovingHash, false);
         }
+
+        if(isGrounded == true)
+        {
+            playerAnimator.SetBool(isGroundedHash, true);
+        }
+        else
+        {
+            playerAnimator.SetBool(isGroundedHash, false);
+        }
     }
 
     private void Update()
