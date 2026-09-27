@@ -147,7 +147,6 @@ public class LevelBuilder : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(math.abs(player.transform.position.x - piecePool[poolIndexEnd].obj.transform.position.x));
         if(math.abs(player.transform.position.x - piecePool[poolIndexEnd].obj.transform.position.x) < 100) 
         {
             PlacePiece();

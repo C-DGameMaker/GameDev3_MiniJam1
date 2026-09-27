@@ -97,56 +97,66 @@ public class PlayerInputs : MonoBehaviour
             groundCheck.position,
             new Vector2(0.5f, 0.1f),
             0,
-            Vector2.up * verMoveDirection,
+            Vector2.down,
             0.5f
         );
         grounded = false;
 
-        if(verMoveDirection == -1) // for being on the ground
+        foreach (RaycastHit2D hit in hits)
         {
-            foreach (RaycastHit2D hit in hits)
+            float angle = Vector2.Angle(hit.normal, Vector2.up);
+
+            if (angle <= maxSlope)
             {
-                float angle = Vector2.Angle(hit.normal, Vector2.up);
+                slopeAnglePlayerUp = new Vector2(
+                    -hit.normal.y,
+                    hit.normal.x
+                );
 
-                if (angle <= maxSlope)
-                {
-                    slopeAnglePlayerUp = new Vector2(
-                        -hit.normal.y,
-                        hit.normal.x
-                    );
+                groundHitHeight = hit.point.y;
+                grounded = true;
 
-                    groundHitHeight = hit.point.y;
-                    grounded = true;
-
-                    break;
-                }
-            }
-
-            if (!grounded)
-            {
-                slopeAnglePlayerUp = -Vector2.right;
-                groundHitHeight = float.MinValue;
+                break;
             }
         }
-        else //for ceeling checks
+
+        if (!grounded)
         {
-            foreach (RaycastHit2D hit in hits)
+            slopeAnglePlayerUp = -Vector2.right;
+            groundHitHeight = float.MinValue;
+        }
+          
+    }
+    public void checkRoof()
+    {
+        RaycastHit2D[] hits = Physics2D.BoxCastAll(
+            groundCheck.position,
+            new Vector2(0.5f, 0.1f),
+            0,
+            Vector2.up,
+            0.5f
+        );
+        onRoof = false;
+
+        foreach (RaycastHit2D hit in hits)
+        {
+            float angle = Vector2.Angle(hit.normal, Vector2.up);
+            if (Mathf.Abs(angle - 180f) < 0.1f)
             {
-                float angle = Vector2.Angle(hit.normal, Vector2.up);
+                slopeAnglePlayerUp = new Vector2(
+                    -hit.normal.y,
+                    hit.normal.x
+                );
+                
+                roofHitY = hit.point.y;
+                onRoof = true;
 
-                if (Mathf.Abs(angle) < 0.1f)
-                {
-                    slopeAnglePlayerUp = new Vector2(
-                        -hit.normal.y,
-                        hit.normal.x
-                    );
-
-                    roofHitY = hit.point.y;
-                    onRoof = true;
-
-                    break;
-                }
+                break;
             }
+        }
+        if (!onRoof)
+        {
+            roofHitY = 100f;
         }
     }
     public void checkWall()
@@ -183,6 +193,7 @@ public class PlayerInputs : MonoBehaviour
     {
         checkWall();
         checkGround(60f);
+        checkRoof();
         UpdateValues();
     }
 
