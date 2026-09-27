@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour
     public GameObject pausedUI;
     public GameObject deathUI;
     public GameObject InstructionUI;
+    public GameObject creditsUI;
     private void HideAllUI()
     {
         mainMenuUI.SetActive(false);
@@ -18,6 +19,7 @@ public class UIManager : MonoBehaviour
         pausedUI.SetActive(false);
         deathUI.SetActive(false);
         InstructionUI.SetActive(false);
+        creditsUI.SetActive(false);
     }
 
     public void ShowMainMenuUI()
@@ -49,6 +51,13 @@ public class UIManager : MonoBehaviour
         bool currentState = InstructionUI.activeSelf;
         currentState = !currentState;
         InstructionUI.SetActive(currentState);
+    }
+
+    public void ToggleCredits()
+    {
+        bool currentState = creditsUI.activeSelf;
+        currentState = !currentState;
+        creditsUI.SetActive(currentState);
     }
 
 }
