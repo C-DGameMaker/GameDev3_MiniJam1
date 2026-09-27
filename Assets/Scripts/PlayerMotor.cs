@@ -51,6 +51,14 @@ public class PlayerMotor : MonoBehaviour
             }
             momentum += (playerInputs.xMovmentVal * -playerInputs.slopeAnglePlayerUp)  * Time.fixedDeltaTime;
         }
+        if(playerInputs.onRoof == true)
+        {
+            //correcting partial tunneling
+            float supposedToBeHeight = playerInputs.roofHitY + playerInputs.transform.localScale.y/2;
+            playerTranslatePos.y = supposedToBeHeight;
+            //
+            momentum.y = math.clamp(momentum.y, float.MinValue, 0);
+        }
         if(playerInputs.canJump == true && playerInputs.jumpVal > 0.1) 
         {
             momentum.y += playerInputs.jumpVal * jumpForce * Time.fixedDeltaTime; //jumping
@@ -95,6 +103,9 @@ public class PlayerMotor : MonoBehaviour
 
         if(momentum.x > 0.0001f) playerInputs.movmentDirection = 1;
         else if(momentum.x < -0.0001f) playerInputs.movmentDirection = -1;
+
+        if(momentum.y > 0.0001f) playerInputs.verMoveDirection = 1;
+        else if(momentum.y < -0.0001f) playerInputs.verMoveDirection = -1;
 
     }
 }

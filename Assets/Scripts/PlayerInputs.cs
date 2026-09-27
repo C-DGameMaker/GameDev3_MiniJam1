@@ -30,6 +30,7 @@ public class PlayerInputs : MonoBehaviour
     //state values
     public bool grounded; 
     public bool onWall;
+    public bool onRoof;
     public bool canJump;
     public bool grappleHookOut;
     public bool grappleHookAttatched;
@@ -37,9 +38,12 @@ public class PlayerInputs : MonoBehaviour
     public Vector2 slopeAnglePlayerUp;
     public float groundHitHeight;
     public float wallHitx;
+    public float roofHitY;
     public float movmentDirection;
     public float jumpCooldown = 1;
     private float jumpCooldownTimer = 0;
+
+    public float verMoveDirection;
     //
 
     //ground stuff
@@ -93,34 +97,56 @@ public class PlayerInputs : MonoBehaviour
             groundCheck.position,
             new Vector2(0.5f, 0.1f),
             0,
-            Vector2.down,
+            Vector2.up * verMoveDirection,
             0.5f
         );
-
         grounded = false;
 
-        foreach (RaycastHit2D hit in hits)
+        if(verMoveDirection == -1) // for being on the ground
         {
-            float angle = Vector2.Angle(hit.normal, Vector2.up);
-
-            if (angle <= maxSlope)
+            foreach (RaycastHit2D hit in hits)
             {
-                slopeAnglePlayerUp = new Vector2(
-                    -hit.normal.y,
-                    hit.normal.x
-                );
+                float angle = Vector2.Angle(hit.normal, Vector2.up);
 
-                groundHitHeight = hit.point.y;
-                grounded = true;
+                if (angle <= maxSlope)
+                {
+                    slopeAnglePlayerUp = new Vector2(
+                        -hit.normal.y,
+                        hit.normal.x
+                    );
 
-                break;
+                    groundHitHeight = hit.point.y;
+                    grounded = true;
+
+                    break;
+                }
+            }
+
+            if (!grounded)
+            {
+                slopeAnglePlayerUp = -Vector2.right;
+                groundHitHeight = float.MinValue;
             }
         }
-
-        if (!grounded)
+        else //for ceeling checks
         {
-            slopeAnglePlayerUp = -Vector2.right;
-            groundHitHeight = float.MinValue;
+            foreach (RaycastHit2D hit in hits)
+            {
+                float angle = Vector2.Angle(hit.normal, Vector2.up);
+
+                if (Mathf.Abs(angle) < 0.1f)
+                {
+                    slopeAnglePlayerUp = new Vector2(
+                        -hit.normal.y,
+                        hit.normal.x
+                    );
+
+                    roofHitY = hit.point.y;
+                    onRoof = true;
+
+                    break;
+                }
+            }
         }
     }
     public void checkWall()
