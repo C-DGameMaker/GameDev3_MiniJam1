@@ -4,24 +4,24 @@ using UnityEngine;
 public class ScoreTracker : MonoBehaviour
 {
     public float score;
-    public TextMeshProUGUI scoreText;
-    ServiceHubManager hubManager;
+    public TextMeshProUGUI gameScoreText;
+    public TextMeshProUGUI endScoreText;
+    public ServiceHubManager hubManager;
 
     private void Start()
     {
         score = 0;
         hubManager = ServiceHubManager.Instance;
     }
-    private void Update()
+    private void FixedUpdate()
     {
-        while(hubManager.gameStateManager._currentState == GameStates.Gameplay)
-        {
-            UpdateScore();
-        }
+        UpdateScore();
     }
 
     void UpdateScore()
     {
-        scoreText.text = "Score: " + score; 
+        if (hubManager.gameStateManager._currentState == GameStates.Gameplay) score++;
+        gameScoreText.text = "Score: " + score;
+        endScoreText.text = "Final Score: " + score;
     }
 }
