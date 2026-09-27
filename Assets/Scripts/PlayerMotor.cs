@@ -34,7 +34,7 @@ public class PlayerMotor : MonoBehaviour
             momentum.y -= gravity * Time.fixedDeltaTime;//gravity 
 
             Vector2 check = (( playerInputs.xMovmentVal * airMobility ) * -playerInputs.slopeAnglePlayerUp) * Time.fixedDeltaTime;
-            if(math.abs(check.x + momentum.x) < math.abs(momentum.x)) momentum += check * airMobility; 
+            if(math.abs(check.x + momentum.x) < math.abs(momentum.x) || math.abs(check.x + momentum.x) < 0.05f) momentum += check * airMobility; 
         } 
         else 
         {
@@ -51,7 +51,16 @@ public class PlayerMotor : MonoBehaviour
             }
             momentum += (playerInputs.xMovmentVal * -playerInputs.slopeAnglePlayerUp)  * Time.fixedDeltaTime;
         }
-        if(playerInputs.canJump == true && playerInputs.jumpVal > 0.1) 
+        if(playerInputs.onRoof == true)
+        {
+            //correcting partial tunneling
+            float supposedToBeHeight = playerInputs.roofHitY - playerInputs.transform.localScale.y/2;
+            playerTranslatePos.y = supposedToBeHeight;
+            //
+            momentum.y = math.clamp(momentum.y, float.MinValue, 0);
+            Debug.Log("ee");
+        }
+        if(playerInputs.canJump == true && playerInputs.jumpVal > 0.1 && playerInputs.onRoof == false) 
         {
             momentum.y += playerInputs.jumpVal * jumpForce * Time.fixedDeltaTime; //jumping
             momentum.y = math.clamp(momentum.y, float.MinValue, 0.4f);
@@ -76,7 +85,7 @@ public class PlayerMotor : MonoBehaviour
                 boost = math.abs(momentum.x - math.clamp(momentum.x, 0, float.MaxValue));
                 momentum.x = math.clamp(momentum.x, 0, float.MaxValue);
             }
-            if (momentum.y > 0.01f && momentum.y < 0.1) momentum.y += boost;
+            if (momentum.y > 0.01f && momentum.y < 0.1 && playerInputs.onRoof == false) momentum.y += boost;
         }
         //
         
@@ -95,6 +104,9 @@ public class PlayerMotor : MonoBehaviour
 
         if(momentum.x > 0.0001f) playerInputs.movmentDirection = 1;
         else if(momentum.x < -0.0001f) playerInputs.movmentDirection = -1;
+
+        if(momentum.y > 0.0001f) playerInputs.verMoveDirection = 1;
+        else if(momentum.y < -0.0001f) playerInputs.verMoveDirection = -1;
 
     }
 }

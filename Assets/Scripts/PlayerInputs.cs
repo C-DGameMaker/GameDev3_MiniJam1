@@ -30,6 +30,7 @@ public class PlayerInputs : MonoBehaviour
     //state values
     public bool grounded; 
     public bool onWall;
+    public bool onRoof;
     public bool canJump;
     public bool grappleHookOut;
     public bool grappleHookAttatched;
@@ -37,9 +38,12 @@ public class PlayerInputs : MonoBehaviour
     public Vector2 slopeAnglePlayerUp;
     public float groundHitHeight;
     public float wallHitx;
+    public float roofHitY;
     public float movmentDirection;
     public float jumpCooldown = 1;
     private float jumpCooldownTimer = 0;
+
+    public float verMoveDirection;
     //
 
     //ground stuff
@@ -96,7 +100,6 @@ public class PlayerInputs : MonoBehaviour
             Vector2.down,
             0.5f
         );
-
         grounded = false;
 
         foreach (RaycastHit2D hit in hits)
@@ -121,6 +124,39 @@ public class PlayerInputs : MonoBehaviour
         {
             slopeAnglePlayerUp = -Vector2.right;
             groundHitHeight = float.MinValue;
+        }
+          
+    }
+    public void checkRoof()
+    {
+        RaycastHit2D[] hits = Physics2D.BoxCastAll(
+            groundCheck.position,
+            new Vector2(0.5f, 0.1f),
+            0,
+            Vector2.up,
+            0.5f
+        );
+        onRoof = false;
+
+        foreach (RaycastHit2D hit in hits)
+        {
+            float angle = Vector2.Angle(hit.normal, Vector2.up);
+            if (Mathf.Abs(angle - 180f) < 0.1f)
+            {
+                slopeAnglePlayerUp = new Vector2(
+                    -hit.normal.y,
+                    hit.normal.x
+                );
+                
+                roofHitY = hit.point.y;
+                onRoof = true;
+
+                break;
+            }
+        }
+        if (!onRoof)
+        {
+            roofHitY = 100f;
         }
     }
     public void checkWall()
@@ -157,6 +193,7 @@ public class PlayerInputs : MonoBehaviour
     {
         checkWall();
         checkGround(60f);
+        checkRoof();
         UpdateValues();
     }
 

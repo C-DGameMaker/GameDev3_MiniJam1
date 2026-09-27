@@ -43,7 +43,6 @@ public class DeathWall : MonoBehaviour
         {
             transform.position += new Vector3(speed * Time.deltaTime, 0 ,0);
             speed += 0.01f * wallSpeedGainMulti * Time.deltaTime;
-            Debug.Log(speed);
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
