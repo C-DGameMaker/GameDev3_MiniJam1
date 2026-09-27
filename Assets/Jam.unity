@@ -198,7 +198,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -50
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
@@ -358,7 +358,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.23287469}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -368,7 +368,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.7, y: 0.7}
+  m_Size: {x: 0.7, y: 1.1657494}
   m_EdgeRadius: 0
 --- !u!95 &239483589
 Animator:
@@ -407,6 +407,13 @@ MonoBehaviour:
   playerAnimator: {fileID: 1719604569}
   inputs: {fileID: 0}
   motor: {fileID: 0}
+  isMoving: 0
+  isGrounded: 0
+  isLeft: 0
+  isRight: 0
+  isJumping: 0
+  movmentSpeed: 0
+  movmentDirection: 0
 --- !u!1 &443327905
 GameObject:
   m_ObjectHideFlags: 0
@@ -524,7 +531,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -50
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
@@ -564,8 +571,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10c4b491b02d3ea41bd638d5592dc948, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeathWall
-  wallSpeedGainMulti: 2
-  initialWallSpeed: 3
+  wallSpeedGainMulti: 1.1
+  initialWallSpeed: 0.1
 --- !u!61 &849140123
 BoxCollider2D:
   m_ObjectHideFlags: 0
