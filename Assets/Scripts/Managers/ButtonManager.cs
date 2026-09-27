@@ -74,7 +74,6 @@ public class ButtonManager : MonoBehaviour
     public void DeathButton()
     {
         if (serviceHub.gameStateManager._currentState != GameStates.Gameplay) return;
-
         serviceHub.gameStateManager.SetState(newState: GameStates.Death);
     }
 }
