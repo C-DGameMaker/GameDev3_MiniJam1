@@ -11,14 +11,20 @@ public class PlayerAnimationHelper : MonoBehaviour
 
     int isMovingHash = Animator.StringToHash("isMoving");
     int isGroundedHash = Animator.StringToHash("isGrounded");
+    int isLeftHash = Animator.StringToHash("isLeft");
+    int isRightHash = Animator.StringToHash("isRight");
+    int isJumpingHash = Animator.StringToHash("isJumping");
 
     //==================READABLE VALUES=====================) (im not sure how this works, feel free to assign values from here!)
-    bool isMoving;
-    bool isGrounded;
+    public bool isMoving;
+    public bool isGrounded;
+    public bool isLeft;
+    public bool isRight;
+    public bool isJumping;
 
     //extras
-    float movmentSpeed;
-    float movmentDirection;
+    public float movmentSpeed;
+    public float movmentDirection;
     //=======================================================
 
     void Start()
@@ -37,7 +43,7 @@ public class PlayerAnimationHelper : MonoBehaviour
     {
         movmentSpeed = motor.momentum.x;
 
-        if (movmentSpeed < 0.001f)
+        if (movmentSpeed < 0.001f && movmentSpeed > -0.001f)
         {
             isMoving = false;
         }
@@ -53,6 +59,35 @@ public class PlayerAnimationHelper : MonoBehaviour
     }
     void AnimationMovement()
     {
+        if (movmentDirection < 0)
+        {
+            isLeft = true;
+            isRight = false;
+        }
+        else if (movmentDirection > 0)
+        {
+            isLeft = false;
+            isRight = true;
+        }
+
+        if (inputs.jumpVal > 0 == true)
+        {
+            isJumping = true;
+        }
+        else
+        {
+            isJumping = false;
+        }
+
+        if (isJumping == true)
+        {
+            playerAnimator.SetBool(isJumpingHash, true);
+        }
+        else
+        {
+            playerAnimator.SetBool(isJumpingHash, false);
+        }
+
         if (isMoving == true)
         {
             playerAnimator.SetBool(isMovingHash, true);
@@ -62,13 +97,31 @@ public class PlayerAnimationHelper : MonoBehaviour
             playerAnimator.SetBool(isMovingHash, false);
         }
 
-        if(isGrounded == true)
+        if (isGrounded == true)
         {
             playerAnimator.SetBool(isGroundedHash, true);
         }
         else
         {
             playerAnimator.SetBool(isGroundedHash, false);
+        }
+
+        if (isLeft == true)
+        {
+            playerAnimator.SetBool(isLeftHash, true);
+        }
+        else
+        {
+            playerAnimator.SetBool(isLeftHash, false);
+        }
+
+        if (isRight == true)
+        {
+            playerAnimator.SetBool(isRightHash, true);
+        }
+        else
+        {
+            playerAnimator.SetBool(isRightHash, false);
         }
     }
 
