@@ -1,3 +1,4 @@
+using Unity.Mathematics;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
@@ -26,6 +27,6 @@ public class CameraController : MonoBehaviour
         {
             proposedPos.x = Vector2.Lerp(transformPos, deathPosition, followSpeed).x;
         }
-        transform.position = new Vector3(proposedPos.x, proposedPos.y, -10);
+        transform.position = new Vector3(proposedPos.x, math.clamp(proposedPos.y, -2, 10), -10);
     }
 }

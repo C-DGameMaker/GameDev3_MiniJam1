@@ -1,13 +1,11 @@
 using UnityEngine;
 
-public class ParallaxBackground : MonoBehaviour
+public class ForegroundParallax : MonoBehaviour
 {
     [SerializeField] private Transform player;
 
-    [Header("Parallax")]
-    [SerializeField] private float parallaxAmount = 0.5f;
+    [SerializeField] private float parallaxAmount = 1.5f;
 
-    [Header("Looping")]
     [SerializeField] private float tileWidth = 20f;
 
     private Vector3 lastPlayerPosition;
@@ -21,14 +19,13 @@ public class ParallaxBackground : MonoBehaviour
     {
         Vector3 movement = player.position - lastPlayerPosition;
 
-        transform.position += new Vector3(movement.x, movement.y * 0.2f, 0);
+        transform.position += new Vector3(movement.x, movement.y * 0.4f, 0);
 
         foreach (Transform child in transform)
         {
             child.localPosition += Vector3.right * movement.x * (parallaxAmount - 1f);
         }
 
-        // Loop children
         foreach (Transform child in transform)
         {
             float x = child.localPosition.x;
