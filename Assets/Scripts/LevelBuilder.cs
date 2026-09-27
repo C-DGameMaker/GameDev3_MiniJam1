@@ -77,8 +77,8 @@ public class LevelBuilder : MonoBehaviour
 
         for (int i = 0; i < shuffleCount; i++)
         {
-            num1 = UnityEngine.Random.Range(0, piecePool.Length - 1);
-            num2 = UnityEngine.Random.Range(0, piecePool.Length - 1);
+            num1 = UnityEngine.Random.Range(0, piecePool.Length);
+            num2 = UnityEngine.Random.Range(0, piecePool.Length);
 
             levelDat temp = piecePool[num1];
             piecePool[num1] = piecePool[num2];
@@ -90,17 +90,18 @@ public class LevelBuilder : MonoBehaviour
     private void PlacePiece()
     {
         int temp = poolIndexEnd;
-        poolIndexEnd += 1;
-        Debug.Log(poolIndexEnd);
-
-        levelDat obj = piecePool[poolIndexEnd];
-        levelDat lastObj;
 
         if(poolIndexEnd >= piecePool.Length - 1)
         {
             Debug.Log("looping index...");
             poolIndexEnd = -1;
         }
+        
+        poolIndexEnd += 1;
+        Debug.Log(poolIndexEnd);
+
+        levelDat obj = piecePool[poolIndexEnd];
+        levelDat lastObj;
 
         if (starting)//determening weather to use the starting piece as the piece to place after, or a previous normal piece
         {
@@ -146,8 +147,8 @@ public class LevelBuilder : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(math.abs(player.transform.position.x - piecePool[poolIndexEnd - 1].obj.transform.position.x));
-        if(math.abs(player.transform.position.x - piecePool[poolIndexEnd - 1].obj.transform.position.x) < 100) 
+        Debug.Log(math.abs(player.transform.position.x - piecePool[poolIndexEnd].obj.transform.position.x));
+        if(math.abs(player.transform.position.x - piecePool[poolIndexEnd].obj.transform.position.x) < 100) 
         {
             PlacePiece();
             Debug.Log("Adding piece");
