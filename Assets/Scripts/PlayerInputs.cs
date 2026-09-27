@@ -95,10 +95,10 @@ public class PlayerInputs : MonoBehaviour
     {
         RaycastHit2D[] hits = Physics2D.BoxCastAll(
             groundCheck.position,
-            new Vector2(0.5f, 0.1f),
+            new Vector2(transform.localScale.x / 2, 0.1f),
             0,
             Vector2.down,
-            0.5f
+            transform.localScale.y / 2
         );
         grounded = false;
 
@@ -131,10 +131,10 @@ public class PlayerInputs : MonoBehaviour
     {
         RaycastHit2D[] hits = Physics2D.BoxCastAll(
             groundCheck.position,
-            new Vector2(0.5f, 0.1f),
+            new Vector2(transform.localScale.x / 2, 0.1f),
             0,
             Vector2.up,
-            0.5f
+            transform.localScale.y / 2
         );
         onRoof = false;
 
@@ -163,10 +163,10 @@ public class PlayerInputs : MonoBehaviour
     {
         RaycastHit2D[] hits = Physics2D.BoxCastAll(
             groundCheck.position,
-            new Vector2(0.1f, 0.5f),
+            new Vector2(0.1f,transform.localScale.y / 2),
             0,
             Vector2.right * movmentDirection,
-            0.5f
+            transform.localScale.x / 2
         );
         
         onWall = false;

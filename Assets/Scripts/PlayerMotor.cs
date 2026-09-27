@@ -77,7 +77,6 @@ public class PlayerMotor : MonoBehaviour
                 playerTranslatePos.x = math.clamp(playerTranslatePos.x, playerInputs.wallHitx - playerInputs.transform.localScale.x/2, float.MinValue);
                 boost = math.abs(momentum.x - math.clamp(momentum.x, float.MinValue, 0));
                 momentum.x = math.clamp(momentum.x, float.MinValue, 0);
-
             }
             else 
             {
