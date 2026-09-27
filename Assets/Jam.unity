@@ -6714,7 +6714,7 @@ MonoBehaviour:
   pausedUI: {fileID: 7274102531286632097}
   deathUI: {fileID: 936715625908774310}
   InstructionUI: {fileID: 1471340762}
-  creditsUI: {fileID: 0}
+  creditsUI: {fileID: 250285838}
 --- !u!114 &8614270487514398909
 MonoBehaviour:
   m_ObjectHideFlags: 0
