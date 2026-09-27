@@ -43615,7 +43615,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
-
 --- !u!114 &1505067826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58792,7 +58791,6 @@ MonoBehaviour:
   deathWall: {fileID: 849140119}
   swapMelody: 0
   swapDrums: 0
-
 --- !u!1 &1989765181
 GameObject:
   m_ObjectHideFlags: 0
@@ -63999,7 +63997,6 @@ Transform:
   - {fileID: 1089691079}
   - {fileID: 3127299587270345214}
   - {fileID: 1380951954940357212}
-
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &484925318576866937
@@ -68162,23 +68159,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0958af971705b644addaf106b117ef4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DynamicMusicPlayer
-  chordsA: {fileID: 0}
-  chordsB: {fileID: 0}
-  breakcoreLoopA: {fileID: 0}
-  breakcoreLoopB: {fileID: 0}
-  melody1A: {fileID: 0}
-  melody1B: {fileID: 0}
-  melody2A: {fileID: 0}
-  melody2B: {fileID: 0}
-  drumLoop1A: {fileID: 0}
-  drumLoop1B: {fileID: 0}
-  drumLoop2A: {fileID: 0}
-  drumLoop2B: {fileID: 0}
-  fadeSpeed: 0
-  maxVolume: 0
-  deathWall: {fileID: 0}
-  swapMelody: 0
-  swapDrums: 0
 --- !u!224 &5848244005176911861
 RectTransform:
   m_ObjectHideFlags: 0
@@ -68324,12 +68304,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 6552495283165048201}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: febd9b2ecea03a64ab99357215c28533, type: 3}
+  m_Script: {fileID: 11500000, guid: c11b3ffbb279cb946a30fc1de08207f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SoundEffects
-  jump: {fileID: 0}
-  onWall: {fileID: 0}
-  WindHowl: {fileID: 0}
+  jump: {fileID: 8300000, guid: 5d06264b466d994429d148725d52b812, type: 3}
+  onWall: {fileID: 2964986849072269020}
+  WindHowl: {fileID: 2877611254624582916}
 --- !u!224 &5969923537624326836
 RectTransform:
   m_ObjectHideFlags: 0
@@ -69279,8 +69259,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Back
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 14e5d0a73d68b9144958dd10952c6ff1, type: 2}
-  m_sharedMaterial: {fileID: -8962260946921997891, guid: 14e5d0a73d68b9144958dd10952c6ff1, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -70066,8 +70046,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Credits
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 14e5d0a73d68b9144958dd10952c6ff1, type: 2}
-  m_sharedMaterial: {fileID: -8962260946921997891, guid: 14e5d0a73d68b9144958dd10952c6ff1, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
