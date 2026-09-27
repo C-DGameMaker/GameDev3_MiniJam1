@@ -1,4 +1,4 @@
-using Unity.Android.Gradle.Manifest;
+
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -20,10 +20,17 @@ public class SoundEffects : MonoBehaviour
         oneShotAudioSource = transform.GetComponent<AudioSource>();
         EventBus.RequestEvent("Jumped", true).ping += playJump;
     }
+    void OnDestroy()
+    {
+        EventBus.RequestEvent("Jumped", true).ping -= playJump;
+    }
+    void OnEnable()
+    {
+        oneShotAudioSource = transform.GetComponent<AudioSource>();
+    }
     void playJump()
     {
         oneShotAudioSource.PlayOneShot(jump);
-
     }
 
     void Update()

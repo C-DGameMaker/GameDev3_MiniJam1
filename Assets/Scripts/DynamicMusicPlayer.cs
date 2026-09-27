@@ -195,8 +195,6 @@ public class DynamicMusicPlayer : MonoBehaviour
         drumLoop2A.volume = Mathf.MoveTowards(drumLoop2A.volume, 0f, fadeSpeed * Time.unscaledDeltaTime);
         drumLoop2B.volume = Mathf.MoveTowards(drumLoop2B.volume, 0f, fadeSpeed * Time.unscaledDeltaTime);
         }
-
-        Debug.Log($"AFTER: {chordsA.volume}");
     }
 
     void Update()

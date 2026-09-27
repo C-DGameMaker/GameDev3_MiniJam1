@@ -107,5 +107,10 @@ public class PlayerMotor : MonoBehaviour
         if(momentum.y > 0.0001f) playerInputs.verMoveDirection = 1;
         else if(momentum.y < -0.0001f) playerInputs.verMoveDirection = -1;
 
+        if(transform.position.y < -20)
+        {
+            EventBus.RequestEvent("PlayerDied", true).Invoke();
+        }
+
     }
 }
